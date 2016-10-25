@@ -41,7 +41,7 @@
         "IaaS_Name": "[replace(resourceGroup().name,'-','')]",
         "numDisks": "[int(parameters('4_Number_of_Disks'))]",
         "sizeOfDataDisksInGB": "[parameters('5_Disk_Size_GB')]",
-        "3_IaaSs_Password": "[int(parameters('3_IaaS_Password'))]",
+        "3_IaaSs_Password": "ckD5d0(32311g",
         "diskArray1": [
             {
                 "name": "datadisk1",
