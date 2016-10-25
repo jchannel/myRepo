@@ -1,0 +1,564 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_CVXTest_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "virtualMachines_CVXTest1_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "db_CVXTest_adminPassword": {
+            "defaultValue": null,
+            "type": "SecureString"
+        },
+        "availabilitySets_CVXTest_name": {
+            "defaultValue": "CVXTest",
+            "type": "String"
+        },
+        "virtualMachines_CVXTest_name": {
+            "defaultValue": "CVXTest",
+            "type": "String"
+        },
+        "virtualMachines_CVXTest1_name": {
+            "defaultValue": "CVXTest1",
+            "type": "String"
+        },
+        "loadBalancers_CVXTest_name": {
+            "defaultValue": "CVXTest",
+            "type": "String"
+        },
+        "networkInterfaces_cvxtest1943_name": {
+            "defaultValue": "cvxtest1943",
+            "type": "String"
+        },
+        "networkInterfaces_cvxtest20_name": {
+            "defaultValue": "cvxtest20",
+            "type": "String"
+        },
+        "networkSecurityGroups_CVXTest_name": {
+            "defaultValue": "CVXTest",
+            "type": "String"
+        },
+        "publicIPAddresses_CVXTest_name": {
+            "defaultValue": "CVXTest",
+            "type": "String"
+        },
+        "publicIPAddresses_CVXTest1_name": {
+            "defaultValue": "CVXTest1",
+            "type": "String"
+        },
+        "publicIPAddresses_CVXTest6753_name": {
+            "defaultValue": "CVXTest6753",
+            "type": "String"
+        },
+        "virtualNetworks_CVXTest_name": {
+            "defaultValue": "CVXTest",
+            "type": "String"
+        },
+        "servers_cvxtest_name": {
+            "defaultValue": "cvxtest",
+            "type": "String"
+        },
+        "storageAccounts_cvxtest5354_name": {
+            "defaultValue": "cvxtest5354",
+            "type": "String"
+        },
+        "databases_CVXTest_name": {
+            "defaultValue": "cvxtest/CVXTest",
+            "type": "String"
+        },
+        "databases_master_name": {
+            "defaultValue": "cvxtest/master",
+            "type": "String"
+        },
+        "firewallRules_AllowAllWindowsAzureIps_name": {
+            "defaultValue": "cvxtest/AllowAllWindowsAzureIps",
+            "type": "String"
+        },
+        "loadBalancers_CVXTest_id": {
+            "defaultValue": "/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/loadBalancers/CVXTest/frontendIPConfigurations/LoadBalancerFrontEnd",
+            "type": "String"
+        },
+        "loadBalancers_CVXTest_id_1": {
+            "defaultValue": "/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/loadBalancers/CVXTest/backendAddressPools/CVXTest",
+            "type": "String"
+        },
+        "loadBalancers_CVXTest_id_2": {
+            "defaultValue": "/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/loadBalancers/CVXTest/probes/CVXTest",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Compute/availabilitySets/CVXTest'.",
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[parameters('availabilitySets_CVXTest_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "southcentralus",
+            "tags": {},
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 3
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Compute/virtualMachines/CVXTest'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_CVXTest_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "southcentralus",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_CVXTest_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_A0"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2012-R2-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_CVXTest_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_cvxtest5354_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_CVXTest_name'),'201671154319.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_CVXTest_name')]",
+                    "adminUsername": "[parameters('virtualMachines_CVXTest_name')]",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_CVXTest_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_cvxtest20_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_CVXTest_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_cvxtest5354_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_cvxtest20_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Compute/virtualMachines/CVXTest1'.",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('virtualMachines_CVXTest1_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "southcentralus",
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_CVXTest_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "Standard_A0"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2012-R2-Datacenter",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[parameters('virtualMachines_CVXTest1_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', parameters('storageAccounts_cvxtest5354_name'), '.blob.core.windows.net', concat('/vhds/', parameters('virtualMachines_CVXTest1_name'),'20167116336.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_CVXTest1_name')]",
+                    "adminUsername": "CVXTest",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true
+                    },
+                    "secrets": [],
+                    "adminPassword": "[parameters('virtualMachines_CVXTest1_adminPassword')]"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_cvxtest1943_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', parameters('availabilitySets_CVXTest_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_cvxtest5354_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_cvxtest1943_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/loadBalancers/CVXTest'.",
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[parameters('loadBalancers_CVXTest_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_CVXTest_name'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[parameters('loadBalancers_CVXTest_name')]"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "[parameters('loadBalancers_CVXTest_name')]",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[parameters('loadBalancers_CVXTest_id')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[parameters('loadBalancers_CVXTest_id_1')]"
+                            },
+                            "probe": {
+                                "id": "[parameters('loadBalancers_CVXTest_id_2')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "[parameters('loadBalancers_CVXTest_name')]",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 80,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_CVXTest_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/networkInterfaces/cvxtest1943'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_cvxtest1943_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_CVXTest1_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CVXTest_name')), '/subnets/default')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_CVXTest_name')), '/backendAddressPools/CVXTest')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_CVXTest_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_CVXTest1_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CVXTest_name'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_CVXTest_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_CVXTest_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/networkInterfaces/cvxtest20'.",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[parameters('networkInterfaces_cvxtest20_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_CVXTest6753_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CVXTest_name')), '/subnets/default')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_CVXTest_name')), '/backendAddressPools/CVXTest')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_CVXTest_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_CVXTest6753_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_CVXTest_name'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancers_CVXTest_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_CVXTest_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/networkSecurityGroups/CVXTest'.",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[parameters('networkSecurityGroups_CVXTest_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "default-allow-rdp",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/publicIPAddresses/CVXTest'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_CVXTest_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/publicIPAddresses/CVXTest1'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_CVXTest1_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/publicIPAddresses/CVXTest6753'.",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[parameters('publicIPAddresses_CVXTest6753_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Network/virtualNetworks/CVXTest'.",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[parameters('virtualNetworks_CVXTest_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "southcentralus",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Sql/servers/cvxtest'.",
+            "type": "Microsoft.Sql/servers",
+            "kind": "v12.0",
+            "name": "[parameters('servers_cvxtest_name')]",
+            "apiVersion": "2014-04-01-preview",
+            "location": "South Central US",
+            "properties": {
+                "administratorLogin": "[concat(parameters('servers_cvxtest_name'),'CVXTest', parameters('servers_cvxtest_name'))]",
+                "administratorLoginPassword": "[parameters('db_CVXTest_adminPassword')]",
+                "version": "12.0"
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/cvxtest/providers/Microsoft.Storage/storageAccounts/cvxtest5354'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_cvxtest5354_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "southcentralus",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Sql/servers/cvxtest/databases/CVXTest'.",
+            "type": "Microsoft.Sql/servers/databases",
+            "kind": "v12.0,user",
+            "name": "[parameters('databases_CVXTest_name')]",
+            "apiVersion": "2014-04-01-preview",
+            "location": "South Central US",
+            "properties": {
+                "databaseId": "61a40a20-3dd2-4c52-ba60-56e5dc8b0312",
+                "edition": "Standard",
+                "status": "Online",
+                "serviceLevelObjective": "S1",
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": "268435456000",
+                "creationDate": "2016-08-02T00:37:50.163Z",
+                "currentServiceObjectiveId": "1b1ebd4d-d903-4baa-97f9-4ea675f5e928",
+                "requestedServiceObjectiveId": "1b1ebd4d-d903-4baa-97f9-4ea675f5e928",
+                "requestedServiceObjectiveName": "S1",
+                "defaultSecondaryLocation": "North Central US",
+                "earliestRestoreDate": "2016-08-02T00:48:29.097Z",
+                "elasticPoolName": null,
+                "containmentState": 2
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_cvxtest_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Sql/servers/cvxtest/databases/master'.",
+            "type": "Microsoft.Sql/servers/databases",
+            "kind": "v12.0,system",
+            "name": "[parameters('databases_master_name')]",
+            "apiVersion": "2014-04-01-preview",
+            "location": "South Central US",
+            "properties": {
+                "databaseId": "191d4bdc-b01a-4c67-bda2-124dfd3e380b",
+                "edition": "System",
+                "status": "Online",
+                "serviceLevelObjective": "System0",
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": "32212254720",
+                "creationDate": "2016-08-02T00:37:21.42Z",
+                "currentServiceObjectiveId": "29dd7459-4a7c-4e56-be22-f0adda49440d",
+                "requestedServiceObjectiveId": "29dd7459-4a7c-4e56-be22-f0adda49440d",
+                "requestedServiceObjectiveName": "System0",
+                "defaultSecondaryLocation": "North Central US",
+                "earliestRestoreDate": null,
+                "elasticPoolName": null,
+                "containmentState": 2
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_cvxtest_name'))]"
+            ]
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/895e443e-6236-482e-846f-9982f6375bb1/resourceGroups/CVXTest/providers/Microsoft.Sql/servers/cvxtest/firewallRules/AllowAllWindowsAzureIps'.",
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "kind": "v12.0",
+            "name": "[parameters('firewallRules_AllowAllWindowsAzureIps_name')]",
+            "apiVersion": "2014-04-01-preview",
+            "location": "South Central US",
+            "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "0.0.0.0"
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_cvxtest_name'))]"
+            ]
+        }
+    ]
+}
